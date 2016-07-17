@@ -28,11 +28,8 @@ public class Customer {
 		String result = this.getName() + " 고객님의 대여료 리스트\n";
 		
 		while(rentals.hasMoreElements()){
-			double thisAmount = 0;
 			Rental each = rentals.nextElement();
 			
-			// 비디오 종류별로 대여료 계
-			thisAmount = each.getCharge();
 			// 적립 포트를 1 포인트 증
 			frequentRenterPoints ++;
 			// 최신물을 이틀 이상 대여하면 보너스 포인트 지급
@@ -43,9 +40,9 @@ public class Customer {
 			
 			//이번에 대여하는 비디오 정보와 대여료를 출력
 			result += "\t" + each.getMovie().getTitle()+ "\t" +
-			String.valueOf(thisAmount) + "\n";
+			String.valueOf(each.getCharge()) + "\n";
 			// 현재까지 누적된 총 대여료
-			totalAmount += thisAmount;
+			totalAmount += each.getCharge();
 		}
 		
 		// footer 행 추가
