@@ -1,0 +1,9 @@
+package com.refactoring.chapter01;
+
+public class ChildrenPrice extends Price {
+
+	@Override
+	int getPriceCode() {
+		return Movie.CHILDRENS;
+	}
+}

@@ -5,12 +5,11 @@ public class Movie {
 	public static final int REGULAR = 0;
 	public static final int NEW_RELEASE = 1;
 	private String _title;
-	private int _priceCode;
-	
+	private Price _price;
 	
 	public Movie(String title, int priceCode){
 		this._title = title;
-		this._priceCode = priceCode;
+		this.setPriceCode(priceCode);
 	}
 
 	public String getTitle() {
@@ -18,32 +17,29 @@ public class Movie {
 	}
 
 	public int getPriceCode() {
-		return _priceCode;
+		return _price.getPriceCode();
 	}
-
-	public void setPriceCode(int _priceCode) {
-		this._priceCode = _priceCode;
+	
+	// price code에 맞게 price클래스의 하위 클래스를 생
+	public void setPriceCode(int arg) {
+		switch(arg){
+			case Movie.REGULAR:
+				_price = new RegularPrice();
+				break;
+			case Movie.NEW_RELEASE:
+				_price = new NewReleasePrice();
+				break;
+			case Movie.CHILDRENS:
+				_price = new ChildrenPrice();
+				break;
+			default:
+				throw new IllegalArgumentException("Wrong price code");
+		}
 	}
 	
 	// 비디오 종류별 대여료 계산 기능을 빼내어 별도의 함수로 작성
 	public double getCharge(int daysRented) {
-		double result = 0;
-		switch(this.getPriceCode()){
-			case Movie.REGULAR:
-				result += 2;
-				if(daysRented > 2)
-					result += (daysRented - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				result += daysRented * 3;
-				break;
-			case Movie.CHILDRENS:
-				result += 1.5;
-				if(daysRented > 3)
-					result += (daysRented - 3) * 1.5;
-				break;
-		}
-		return result;
+		return _price.getCharge(daysRented);
 	}
 	
 	public int getFrequentRentalPoints(int daysRented) {
@@ -53,4 +49,14 @@ public class Movie {
 		}else 
 			return 1;
 	}
+
+	public Price getPrice() {
+		return _price;
+	}
+
+	public void setPrice(Price _price) {
+		this._price = _price;
+	}
+	
+	
 }
