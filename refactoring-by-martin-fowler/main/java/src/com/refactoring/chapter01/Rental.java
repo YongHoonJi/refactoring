@@ -45,7 +45,7 @@ public class Rental {
 	 * @param frequentRenterPoints
 	 * @return
 	 */
-	public int getFrequentRentalPoints(int frequentRenterPoints) {
+	public int getFrequentRentalPoints() {
 		if((this.getMovie().getPriceCode() == Movie.NEW_RELEASE )
 				&& this._daysRented > 1){
 			return 2;

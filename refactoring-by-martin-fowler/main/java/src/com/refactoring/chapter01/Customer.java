@@ -22,36 +22,52 @@ public class Customer {
 	}
 	
 	public String statement(){
-		int frequentRenterPoints = 0;
 		Enumeration<Rental> rentals = this._rentals.elements();
 		String result = this.getName() + " 고객님의 대여료 리스트\n";
 		
 		while(rentals.hasMoreElements()){
 			Rental each = rentals.nextElement();
-			
 			// 최신물을 이틀 이상 대여하면 보너스 포인트 지급
-			frequentRenterPoints += each.getFrequentRentalPoints(frequentRenterPoints);
-			
 			//이번에 대여하는 비디오 정보와 대여료를 출력
 			result += "\t" + each.getMovie().getTitle()+ "\t" +
 			String.valueOf(each.getCharge()) + "\n";
-			// 현재까지 누적된 총 대여료
 		}
 		
 		// footer 행 추가
-		result += "누적 대여료:" + String.valueOf(this.getTotalCharge()) + "\n";
-		result += "적립 포인트:" + String.valueOf(frequentRenterPoints) + "\n";
+		AccumulatedRentalNumbers total = this.getTotalNumbers();
+		result += "누적 대여료:" + String.valueOf(total.getTotalCharge()) + "\n";
+		result += "적립 포인트:" + String.valueOf(total.getTotalFrequentRentalPoints()) + "\n";
 		return result;
 	}
 	
-	private double getTotalCharge(){
-		double result = 0;
+	// 현재까지 누적된 총 대여료
+	private AccumulatedRentalNumbers getTotalNumbers(){
+		double totalCharge = 0;
+		int totalFrequentRentalPoints = 0;
 		Enumeration<Rental> rentals = _rentals.elements();
 		while(rentals.hasMoreElements()){
 			Rental each = (Rental)rentals.nextElement();
-			result += each.getCharge();
+			totalCharge += each.getCharge();
+			totalFrequentRentalPoints += each.getFrequentRentalPoints();
 		}
-		return result;
+		return new AccumulatedRentalNumbers(totalCharge, totalFrequentRentalPoints);
 	}
+	
+	public class AccumulatedRentalNumbers{
+		private double _totalCharge;
+		private int _totalFrequentRentalPoints;
+		
+		public AccumulatedRentalNumbers(double totalCharge, int totalFrequentRentalPoints){
+			this._totalCharge = totalCharge;
+			this._totalFrequentRentalPoints = totalFrequentRentalPoints;
+		}
 
+		public double getTotalCharge() {
+			return _totalCharge;
+		}
+
+		public int getTotalFrequentRentalPoints() {
+			return _totalFrequentRentalPoints;
+		}
+	}
 }
