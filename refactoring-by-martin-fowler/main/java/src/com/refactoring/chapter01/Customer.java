@@ -30,7 +30,7 @@ public class Customer {
 			// 최신물을 이틀 이상 대여하면 보너스 포인트 지급
 			//이번에 대여하는 비디오 정보와 대여료를 출력
 			result += "\t" + each.getMovie().getTitle()+ "\t" +
-			String.valueOf(each.getCharge()) + "\n";
+			String.valueOf(each.getMovie().getCharge(each.getDaysRented())) + "\n";
 		}
 		
 		// footer 행 추가
@@ -49,7 +49,7 @@ public class Customer {
 			// 최신물을 이틀 이상 대여하면 보너스 포인트 지급
 			//이번에 대여하는 비디오 정보와 대여료를 출력
 			result += "\t" + each.getMovie().getTitle()+ "\t" +
-			String.valueOf(each.getCharge()) + "<BR>\n";
+			String.valueOf(each.getMovie().getCharge(each.getDaysRented())) + "<BR>\n";
 		}
 		
 		// footer 행 추가

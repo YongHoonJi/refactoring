@@ -19,37 +19,12 @@ public class Rental {
 		return _daysRented;
 	}
 	
-	// 비디오 종류별 대여료 계산 기능을 빼내어 별도의 함수로 작성
-	// 하지만 amountFor메서드의 정보들을 보면 모두 Rental의 것이다. 
-	public double getCharge() {
-		double result = 0;
-		switch(getMovie().getPriceCode()){
-			case Movie.REGULAR:
-				result += 2;
-				if(this._daysRented > 2)
-					result += (this._daysRented - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				result += this._daysRented * 3;
-				break;
-			case Movie.CHILDRENS:
-				result += 1.5;
-				if(this._daysRented > 3)
-					result += (this._daysRented - 3) * 1.5;
-				break;
-		}
-		return result;
+	public double getCharge(){
+		return this._movie.getCharge(this._daysRented);
 	}
 	
-	/**
-	 * @param frequentRenterPoints
-	 * @return
-	 */
-	public int getFrequentRentalPoints() {
-		if((this.getMovie().getPriceCode() == Movie.NEW_RELEASE )
-				&& this._daysRented > 1){
-			return 2;
-		}else 
-			return 1;
+	public int getFrequentRentalPoints(){
+		return this._movie.getFrequentRentalPoints(this._daysRented);
 	}
+	
 }
