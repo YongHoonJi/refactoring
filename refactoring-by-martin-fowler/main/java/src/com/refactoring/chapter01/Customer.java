@@ -40,6 +40,25 @@ public class Customer {
 		return result;
 	}
 	
+	public String htmlStatement(){
+		Enumeration<Rental> rentals = this._rentals.elements();
+		String result = "<H1><EM>" + this.getName() + " 고객님의 대여료 리스트</EM></H1><P>\n";
+		
+		while(rentals.hasMoreElements()){
+			Rental each = rentals.nextElement();
+			// 최신물을 이틀 이상 대여하면 보너스 포인트 지급
+			//이번에 대여하는 비디오 정보와 대여료를 출력
+			result += "\t" + each.getMovie().getTitle()+ "\t" +
+			String.valueOf(each.getCharge()) + "<BR>\n";
+		}
+		
+		// footer 행 추가
+		AccumulatedRentalNumbers total = this.getTotalNumbers();
+		result += "<P>누적 대여료:<EM>" + String.valueOf(total.getTotalCharge()) + "</EM><P>\n";
+		result += "<EM>적립 포인트:" + String.valueOf(total.getTotalFrequentRentalPoints()) + "</EM><P>\n";
+		return result;
+	}
+	
 	// 현재까지 누적된 총 대여료
 	private AccumulatedRentalNumbers getTotalNumbers(){
 		double totalCharge = 0;
